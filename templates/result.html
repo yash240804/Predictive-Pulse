@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .result-container {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .result-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .result-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .severity-indicator {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .severity-normal {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .severity-stage1 {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .severity-stage2 {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .severity-crisis {
+            background: #f5c6cb;
+            color: #721c24;
+        }
+
+        .recommendations {
+            background: #e3f2fd;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .recommendations h3 {
+            color: #1976d2;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .recommendations ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .recommendations li {
+            padding: 8px 0;
+            color: #555;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .recommendations li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .result-container {
+                padding: 20px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Prediction Result</h1>
+            <p>Your health assessment is ready</p>
+        </div>
+        
+        <div class="result-container">
+            <div class="result-card">
+                <div class="result-text">{{ prediction_text }}</div>
+                
+                {% if "NORMAL" in prediction_text %}
+                    <div class="severity-indicator severity-normal">Normal Blood Pressure</div>
+                    <div class="result-description">
+                        Your blood pressure readings are within the normal range. Continue maintaining a healthy lifestyle with regular exercise and balanced diet.
+                    </div>
+                {% elif "Stage-1" in prediction_text %}
+                    <div class="severity-indicator severity-stage1">Stage 1 Hypertension</div>
+                    <div class="result-description">
+                        You have Stage 1 hypertension. This requires lifestyle modifications and may need medical monitoring.
+                    </div>
+                {% elif "Stage-2" in prediction_text %}
+                    <div class="severity-indicator severity-stage2">Stage 2 Hypertension</div>
+                    <div class="result-description">
+                        You have Stage 2 hypertension. This requires immediate medical attention and treatment.
+                    </div>
+                {% elif "CRISIS" in prediction_text %}
+                    <div class="severity-indicator severity-crisis">Hypertensive Crisis</div>
+                    <div class="result-description">
+                        This indicates a hypertensive crisis requiring immediate emergency medical attention.
+                    </div>
+                {% else %}
+                    <div class="result-description">
+                        Please consult with a healthcare professional for proper diagnosis and treatment.
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="recommendations">
+                <h3>
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    Recommendations
+                </h3>
+                <ul>
+                    <li>Schedule an appointment with your healthcare provider</li>
+                    <li>Monitor your blood pressure regularly</li>
+                    <li>Maintain a healthy diet low in sodium</li>
+                    <li>Exercise regularly (30 minutes daily)</li>
+                    <li>Limit alcohol consumption</li>
+                    <li>Manage stress through relaxation techniques</li>
+                    <li>Take prescribed medications as directed</li>
+                </ul>
+            </div>
+            
+            <div class="button-group">
+                <a href="/predict_form" class="btn">Try Another Assessment</a>
+                <a href="/" class="btn btn-secondary">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

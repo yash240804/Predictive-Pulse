@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hypertension Prediction Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .form-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #e9ecef;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-control select {
+            cursor: pointer;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            margin-left: 15px;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Hypertension Risk Assessment</h1>
+            <p>Please provide your health information for accurate prediction</p>
+        </div>
+        
+        <div class="form-container">
+            <form action="/predict" method="POST">
+                <div class="form-grid">
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            Personal Information
+                        </h3>
+                        
+                        <div class="form-group">
+                            <label for="Gender">Gender</label>
+                            <select class="form-control" name="Gender" id="Gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="0">Male</option>
+                                <option value="1">Female</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Age">Age Group</label>
+                            <select class="form-control" name="Age" id="Age" required>
+                                <option value="">Select Age Group</option>
+                                <option value="0">18-34</option>
+                                <option value="1">35-50</option>
+                                <option value="2">51-64</option>
+                                <option value="3">65+</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Medical History -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                            </svg>
+                            Medical History
+                        </h3>
+                        
+                        <div class="form-group">
+                            <label for="History">Family History of Hypertension</label>
+                            <select class="form-control" name="History" id="History" required>
+                                <option value="">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Patient">Previous Patient</label>
+                            <select class="form-control" name="Patient" id="Patient" required>
+                                <option value="">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="TakeMedication">Currently Taking Medication</label>
+                            <select class="form-control" name="TakeMedication" id="TakeMedication" required>
+                                <option value="">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Symptoms -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                            Symptoms & Severity
+                        </h3>
+                        
+                        <div class="form-group">
+                            <label for="Severity">Disease Severity</label>
+                            <select class="form-control" name="Severity" id="Severity" required>
+                                <option value="">Select Severity</option>
+                                <option value="0">Mild</option>
+                                <option value="1">Moderate</option>
+                                <option value="2">Severe</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="BreathShortness">Shortness of Breath</label>
+                            <select class="form-control" name="BreathShortness" id="BreathShortness" required>
+                                <option value="">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="VisualChanges">Visual Changes</label>
+                            <select class="form-control" name="VisualChanges" id="VisualChanges" required>
+                                <option value="">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="NoseBleeding">Nose Bleeding</label>
+                            <select class="form-control" name="NoseBleeding" id="NoseBleeding" required>
+                                <option value="">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Diagnosis & Blood Pressure -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                            Diagnosis & Blood Pressure
+                        </h3>
+                        
+                        <div class="form-group">
+                            <label for="Whendiagnoused">When Diagnosed</label>
+                            <select class="form-control" name="Whendiagnoused" id="Whendiagnoused" required>
+                                <option value="">Select</option>
+                                <option value="0">Less than 1 Year</option>
+                                <option value="1">1-5 Years</option>
+                                <option value="2">More than 5 Years</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Systolic">Systolic Blood Pressure</label>
+                            <select class="form-control" name="Systolic" id="Systolic" required>
+                                <option value="">Select Range</option>
+                                <option value="0">111-120</option>
+                                <option value="1">121-130</option>
+                                <option value="2">130+</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="Diastolic">Diastolic Blood Pressure</label>
+                            <select class="form-control" name="Diastolic" id="Diastolic" required>
+                                <option value="">Select Range</option>
+                                <option value="0">81-90</option>
+                                <option value="1">91-100</option>
+                                <option value="2">100+</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="ControlledDiet">Controlled Diet</label>
+                            <select class="form-control" name="ControlledDiet" id="ControlledDiet" required>
+                                <option value="">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="submit-section">
+                    <button type="submit" class="btn">Get Prediction</button>
+                    <a href="/" class="btn btn-secondary">Back to Home</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
